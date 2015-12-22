@@ -9,7 +9,8 @@ var url = "http://ojp.nationalrail.co.uk/service/timesandfares/%s/%s/%s/%s/dep",
 		{
 			regex: /mon|tue|wed|thu|fri|sat|sun/i,
 			transformer: function(value) {
-				return moment().day(["sun", "mon", "tue", "wed", "thu", "fri", "sat"].indexOf(value.toLowerCase()))
+				var indexOfDay = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"].indexOf(value.toLowerCase());
+				return moment().day(indexOfDay + (indexOfDay < moment().day() ? 7 : 0))
                     .format("DDMMYY");
 			}
 		},	
@@ -28,9 +29,9 @@ var url = "http://ojp.nationalrail.co.uk/service/timesandfares/%s/%s/%s/%s/dep",
 	],
 	dateTransform = function(value) {
 
-		return dateMatchers.filter(function(dateMatcher) {
+		return dateMatchers.find(function(dateMatcher) {
 			return !!dateMatcher.regex.exec(value);
-		})[0].transformer(value);
+		}).transformer(value);
 	},
 	from = process.argv[2],
 	to = process.argv[3],
