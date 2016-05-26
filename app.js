@@ -5,6 +5,7 @@ var open = require("open"),
 	moment = require("moment");
 
 var url = "http://ojp.nationalrail.co.uk/service/timesandfares/%s/%s/%s/%s/dep",
+	arriveOrDepartUrl = "http://ojp.nationalrail.co.uk/service/ldbboard/%s/%s",
 	dateMatchers = [
 		{
 			regex: /mon|tue|wed|thu|fri|sat|sun/i,
@@ -33,10 +34,16 @@ var url = "http://ojp.nationalrail.co.uk/service/timesandfares/%s/%s/%s/%s/dep",
 			return !!dateMatcher.regex.exec(value);
 		}).transformer(value);
 	},
-	from = process.argv[2],
-	to = process.argv[3],
-	now = process.argv[4] ? moment(process.argv[4], "HHmm") : moment(),
-	time = now.format("HHmm"),
-	day = process.argv[5] ? dateTransform(process.argv[5]) : "today";
+	from = process.argv[2];
 
-open(format(url, from, to, day, time));
+if (from[0] === "-") {
+	open(format(arriveOrDepartUrl, from.substring(1), process.argv[3]));
+}
+else {
+	var to = process.argv[3],
+		now = process.argv[4] ? moment(process.argv[4], "HHmm") : moment(),
+		time = now.format("HHmm"),
+		day = process.argv[5] ? dateTransform(process.argv[5]) : "today";
+
+	open(format(url, from, to, day, time));
+}
