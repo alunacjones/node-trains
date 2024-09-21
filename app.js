@@ -1,11 +1,12 @@
 //"http://ojp.nationalrail.co.uk/service/timesandfares/CTR/SDB/today/1930/dep"
+// new: https://www.nationalrail.co.uk/journey-planner/?type=single&origin=CTR&destination=ALT&leavingType=departing&leavingDate=090524&leavingHour=07&leavingMin=15&adults=1&extraTime=0#O
 /* global process */
 var open = require("open"),
 	format = require("util").format,
 	moment = require("moment");
 
 var url = "http://ojp.nationalrail.co.uk/service/timesandfares/%s/%s/%s/%s/dep",
-	arriveOrDepartUrl = "http://ojp.nationalrail.co.uk/service/ldbboard/%s/%s",
+	arriveOrDepartUrl = "https://www.nationalrail.co.uk/live-trains/%s/%s/",
 	dateMatchers = [
 		{
 			regex: /mon|tue|wed|thu|fri|sat|sun/i,
@@ -37,7 +38,7 @@ var url = "http://ojp.nationalrail.co.uk/service/timesandfares/%s/%s/%s/%s/dep",
 	from = process.argv[2];
 
 if (from[0] === "-") {
-	open(format(arriveOrDepartUrl, from.substring(1), process.argv[3]));
+	open(format(arriveOrDepartUrl, from == "-arr" ? "arrivals" : "departures", process.argv[3]));
 }
 else {
 	var to = process.argv[3],
