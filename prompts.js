@@ -8,6 +8,9 @@ export const chooseStation = async (message, station) =>
                 message: `Provide a ${message}`
             })
         }
+
+        if (station.length === 3) return station;
+        
         var stations = await findStation(station);
 
         if (stations.length === 1)
