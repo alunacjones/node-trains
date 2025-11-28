@@ -10,7 +10,7 @@ export const chooseStation = async (message, station) =>
         }
 
         if (station.length === 3) return station;
-        
+
         var stations = await findStation(station);
 
         if (stations.length === 1)
@@ -28,7 +28,6 @@ export const chooseStation = async (message, station) =>
         }
     }
     catch (e) {
-        console.log(e);
         return station;
     }
 }
