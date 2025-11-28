@@ -4,10 +4,14 @@
   "description": "0.1.0",
   "main": "app.js",
   "dependencies": {
+    "@inquirer/prompts": "^7.10.1",
     "moment": "~2.9.0",
     "open": "~0.0.5"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/moment": "^2.11.29",
+    "@types/open": "^6.1.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
